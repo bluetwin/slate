@@ -1,6 +1,6 @@
 # Lawyers
 
-The lawyers endpoint is where you get all the lawyer data. The data will come look something like the JSON example below. 
+Get single, bulk, or search for Avvo lawyers.
 
 > Example response
 
@@ -47,7 +47,7 @@ The lawyers endpoint is where you get all the lawyer data. The data will come lo
 
 ```
 
-The fields are
+### Fields
 
 Field               | Description
 --------------------|-------
@@ -63,7 +63,7 @@ client_review_count | Number of client reviews
 client_review_score | The average rating based on client reviews
 headshot_url        | The URL to the lawyer's headshot image
 licensed_since      | The year in which the lawyer was licensed
-bio                 | The lawyer's bio.
+bio                 | The lawyer's bio. <aside class="notice">This may be formatted in HTML<aside/>
 lawyer_specialties  | The lawyer's specialties. Array of `{"name": "", "percent":""}` JSON blobs
 browse_links        | Lawyer links. Can be of type "profile" and "contact". Array of `{"type":"", "url":""}` JSON blobs
 
@@ -78,6 +78,10 @@ Look up multiple lawyers by id
 
 ### Params
 
+Param     | Value
+----------|------
+id        | Primary key of the layer
+
 Array of IDs, in the standard Rails format:
 
 `https://api.avvo.com/api/4/lawyers.json?id[]=1&id[]=2`
@@ -88,7 +92,12 @@ Array of IDs, in the standard Rails format:
 Look up a single lawyer.
 
 ### URL
-`https://api.avvo.com/api/4/lawyers/28995.json`
+
+`https://api.avvo.com/api/4/lawyers/:id.json`
+
+Param     | Value
+----------|------
+id        | Primary key of the lawyer
 
 ## Search [GET]
 
