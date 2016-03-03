@@ -54,7 +54,7 @@ Array of IDs, in the standard Rails format:
 
 ## Show [GET]
 
-Get sinle specialty by id
+Get single specialty by id
 
 ### URL
 
