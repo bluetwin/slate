@@ -116,7 +116,7 @@ Param               | Description                                               
 q                   | Query string                                              | Plain English query string, e.g. "DUI" or "Mark Britton"
 loc                 | Location string. Can be replaced with lat long values.    | Plain English location string,  e.g. "Seattle, wa"
 lat                 | Latitude value                                            | Floating point number
-long                | Longitude value                                           | Floating point nuber
+long                | Longitude value                                           | Floating point number
 radius              | Search radius. Works for both lat long and `loc` searches | Integer
 has_reviews         | Filters lawyers who have reviews                          | true/false
 avvo_rating         | Sort by Avvo rating                                       | `not required`
