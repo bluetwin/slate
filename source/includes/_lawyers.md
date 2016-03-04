@@ -122,6 +122,3 @@ has_reviews         | Filters lawyers who have reviews                          
 avvo_rating         | Sort by Avvo rating                                       | `not required`
 client_rating       | Sort by average value of client ratings                   | `not required`
 number_of_reviews   | Sort by number of client reviews                          | `not required`
-boosts              | Boost lawyers in the results by certain fields            | "avvo_pro"
-
-
