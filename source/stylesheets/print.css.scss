@@ -95,7 +95,7 @@ body {
   h2 {
     @extend %header-font;
     font-size: 1.8em;
-    margin-top: 2em;
+    margin-top: 0.2em;
     border-top: 2px solid $print-color-light;
     padding-top: 0.8em;
   }
@@ -109,7 +109,7 @@ body {
   h3, h4 {
     @extend %header-font;
     font-size: 0.8em;
-    margin-top: 1.5em;
+    margin-top: 0.1em;
     margin-bottom: 0.8em;
     text-transform: uppercase;
   }
