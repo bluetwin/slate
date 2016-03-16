@@ -91,7 +91,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -101,6 +101,8 @@
     <div class="tocify-wrapper">
       <img src="images/logo-white.png" />
         <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="ruby">ruby</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -120,17 +122,70 @@
 
 <h2 id="getting-access">Getting Access</h2>
 
+<blockquote>
+<p>API Endpoint</p>
+</blockquote>
+<pre class="highlight plaintext"><code>  https://api.avvo.com/api/4
+</code></pre>
+
 <p>To use the API, you must have an Avvo account with some extra privileges. Contact <a href="mailto:dfrench@avvo.com">Dave French</a> to get set up.</p>
 
-<h2 id="using-the-api">Using the API</h2>
+<p>We format our responses in JSON according to the <a href="http://jsonapi.org/">Json API</a> standard.</p>
 
-<p>The API uses <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic authentication over SSL</a>. You must supply your Avvo username and password with each request. The linked Wikipedia page shows some examples on how to do this, but most programming languages and system tools should include built-in support for this.</p>
-
-<p>Detailed documentation for each possible action, including the URL endpoint and required parameters, are accessible from the sidebar to the left. All Avvo API responses will be returned in JSON, which is human-readable. JSON parsers are also available for nearly every language. Example responses are shown on the API detail pages.</p>
+<p>Detailed documentation for each possible action, including the URL endpoint and required parameters, are available below. All Avvo API responses will be returned in JSON, which is human-readable. JSON parsers are also available for nearly every language. Example responses are shown on the API detail pages.</p>
 
 <h2 id="format">Format</h2>
 
 <p>We format our responses in JSON according to the <a href="http://jsonapi.org/">Json API</a> standard.</p>
+
+          <h2 id="authentication">Authentication</h2>
+
+<p>This API support Oauth2 authentication:</p>
+
+<h3 id="oauth2">OAuth2</h3>
+<pre class="highlight shell"><code>  curl https://api.avvo.com/api/4/lawyers.json <span class="se">\</span>
+      -H <span class="s2">"Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c"</span>
+
+</code></pre>
+<pre class="highlight ruby"><code>  <span class="nb">require</span> <span class="s2">"oauth2"</span>
+  <span class="n">callback_url</span> <span class="o">=</span> <span class="s2">"https://www.yoursite/oauth2/callback"</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="no">OAuth2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="o">&lt;</span><span class="n">client_id</span><span class="o">&gt;</span><span class="p">,</span>   <span class="o">&lt;</span><span class="n">client_secret</span><span class="o">&gt;</span><span class="p">,</span> <span class="ss">site: </span><span class="s2">"https://api.avvo.com"</span><span class="p">,</span> <span class="ss">authorize_url: </span><span class="err">”</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">oauth2</span><span class="o">/</span><span class="n">authorize</span><span class="err">”</span><span class="p">,</span> <span class="ss">token_url: </span><span class="err">“</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">oauth2</span><span class="o">/</span><span class="n">authorize</span><span class="err">”</span><span class="p">)</span>
+  <span class="n">client</span><span class="p">.</span><span class="nf">auth_code</span><span class="p">.</span><span class="nf">authorize_url</span><span class="p">(</span><span class="ss">redirect_uri: </span><span class="n">callback_url</span><span class="p">)</span>
+  <span class="n">token</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">auth_code</span><span class="p">.</span><span class="nf">get_token</span><span class="p">(</span><span class="s2">"authorization_code_value"</span><span class="p">,</span> <span class="ss">redirect_uri: </span><span class="n">callback_url</span><span class="p">,</span>
+                                      <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Authorization"</span> <span class="o">=&gt;</span> <span class="s2">"Basic some_password"</span><span class="p">})</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'api/4/lawyers.json'</span><span class="p">,</span> <span class="ss">params: </span><span class="p">{</span> <span class="ss">id: </span><span class="mi">123</span> <span class="p">})</span>
+  <span class="n">response</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span>
+  <span class="c1"># =&gt; OAuth2::Response</span>
+
+</code></pre>
+
+<p>OAuth2 is recommended when you’re creating an application for others on top of Avvo&rsquo;s platform. This authentication provides a secure and easy to use authentication flow for users.</p>
+
+<p>OAuth2 requests must be authenticated with a valid access token passed as bearer token. To use the bearer token, construct a normal HTTPS request and include an Authorization header with the value of Bearer. Signing is not required.</p>
+
+<p>Read more about <a href="http://oauth.net/2/">OAuth2 authentication</a>.</p>
+
+<h3 id="obtaining-an-access-token">Obtaining an Access Token</h3>
+<pre class="highlight ruby"><code>   <span class="p">{</span> <span class="ss">grant_type: </span><span class="n">authorization_code</span><span class="p">,</span>
+      <span class="ss">client_id: </span><span class="o">&lt;</span><span class="n">client_id</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="ss">client_secret: </span><span class="o">&lt;</span><span class="n">client_secret</span><span class="o">&gt;</span>
+      <span class="ss">username: </span><span class="o">&lt;</span><span class="n">avvo</span><span class="p">.</span><span class="nf">com</span> <span class="n">user</span> <span class="n">email</span><span class="o">&gt;</span>
+      <span class="ss">password: </span><span class="o">&lt;</span><span class="n">avvo</span><span class="p">.</span><span class="nf">com</span> <span class="n">user</span> <span class="n">password</span><span class="o">&gt;</span>
+      <span class="ss">redirect_uri: </span><span class="o">&lt;</span><span class="n">redirect_url</span> <span class="n">used</span> <span class="k">for</span> <span class="n">registration</span><span class="o">&gt;</span>
+      <span class="ss">code: </span><span class="o">&lt;</span><span class="n">auth_code</span><span class="o">&gt;</span>
+    <span class="p">}</span>
+</code></pre>
+
+<ol>
+<li>Get permission to access Avvo&rsquo;s API.</li>
+<li>Follow instructions sent to you about setting up an oauth2 application.</li>
+<li>Post a call to <code class="prettyprint">https://api.avvo.com/api/4/oauth2/authorize</code> with your id and secret to obtain an auth code. See code to the right.</li>
+<li>This generates a link to sign in and an auth_code is sent along with the redirect.</li>
+<li>Capture the auth_code sent in the redirect.</li>
+<li>Post to <code class="prettyprint">https://api.stag.avvo.com/api/2/oauth2/authorize</code> with the fields to the right</li>
+<li>The response will be the access_token.</li>
+<li>Add this to the Bearer Authorization header of each request.</li>
+</ol>
 
           <h1 id="lawyers">Lawyers</h1>
 
@@ -606,6 +661,8 @@
       </div>
       <div class="dark-box">
           <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="ruby">ruby</a>
           </div>
       </div>
     </div>
