@@ -105,7 +105,7 @@ Natural text search for lawyers in location by name or specialty
 
 ### URL
 
-`https://api.avvo.com/api/4/lawyers/:id.json`
+`https://api.avvo.com/api/4/lawyers/search.json`
 
 ### Params
 
@@ -122,3 +122,5 @@ has_reviews         | Filters lawyers who have reviews                          
 avvo_rating         | Sort by Avvo rating                                       | `not required`
 client_rating       | Sort by average value of client ratings                   | `not required`
 number_of_reviews   | Sort by number of client reviews                          | `not required`
+per_page            | number of lawyers per page                                | `not required`
+page                | page number for query                                     | `not required`
